@@ -35,3 +35,11 @@ export const updateContact = async (contactId, payload, options = {}) => {
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
+
+export const deleteContact = async (contactId) => {
+  const contact = await ContactsCollection.findByIdAndDelete({
+    _id: contactId,
+  });
+
+  return contact;
+};
