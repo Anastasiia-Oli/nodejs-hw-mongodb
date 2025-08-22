@@ -35,14 +35,26 @@ export const getContactByIdController = async (req, res) => {
 
 // ---------------- create (post)
 export const createContactController = async (req, res) => {
-  const contact = await createContact(req.body);
+  //   const contact = await createContact(req.body);
 
-  if (!req.body.name || !req.body.phoneNumber || !req.body.contactType) {
+  //   if (!req.body.name || !req.body.phoneNumber || !req.body.contactType) {
+  //     return res.status(400).json({
+  //       status: 400,
+  //       message: 'Missing required fields: name, phoneNumber, contactType',
+  //     });
+  //   }
+
+  const { name, phoneNumber, contactType } = req.body;
+
+  // Проверка обязательных полей
+  if (!name || !phoneNumber || !contactType) {
     return res.status(400).json({
       status: 400,
       message: 'Missing required fields: name, phoneNumber, contactType',
     });
   }
+  // Создание контакта
+  const contact = await createContact(req.body);
 
   res.status(201).json({
     status: 201,
