@@ -1,5 +1,7 @@
 import { model, Schema } from 'mongoose';
 
+// model for working directly with database
+// model() turns the schema into a model that can perform queries in MongoDB.
 const contactsSchema = new Schema(
   {
     name: {

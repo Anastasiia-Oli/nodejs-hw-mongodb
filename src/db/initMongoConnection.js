@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 import { getEnvVar } from '../utils/getEnvVar.js';
 
+// connecting Mongo cluster
 export const initMongoConnection = async () => {
   try {
     const user = getEnvVar('MONGODB_USER');
