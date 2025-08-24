@@ -46,14 +46,14 @@ export const createContactController = async (req, res) => {
 
   const { name, phoneNumber, contactType } = req.body;
 
-  // Проверка обязательных полей
+  // Validate required fields
   if (!name || !phoneNumber || !contactType) {
     return res.status(400).json({
       status: 400,
       message: 'Missing required fields: name, phoneNumber, contactType',
     });
   }
-  // Создание контакта
+  // Creating contact
   const contact = await createContact(req.body);
 
   res.status(201).json({
