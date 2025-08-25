@@ -8,10 +8,19 @@ const parseContactType = (contactType) => {
 };
 
 const parseIsFavourite = (isFavourite) => {
-  const isBoolean = typeof isFavourite === 'boolean';
-  if (!isBoolean) return;
+  if (typeof isFavourite === 'string') {
+    if (isFavourite.toLowerCase() === 'true') return true;
+    if (isFavourite.toLowerCase() === 'false') return false;
+  }
 
-  return isFavourite;
+  if (typeof isFavourite === 'boolean') {
+    return isFavourite;
+  }
+  return undefined;
+  //   const isBoolean = typeof isFavourite === 'boolean';
+  //   if (!isBoolean) return;
+
+  //   return isFavourite;
 };
 
 export const parseFilterParams = (query) => {
