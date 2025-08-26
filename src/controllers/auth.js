@@ -1,6 +1,8 @@
 import { registerUser } from '../services/auth.js';
 import { loginUser } from '../services/auth.js';
 
+import { THIRTY_DAYS } from '../constants/index.js';
+
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
 
@@ -12,5 +14,25 @@ export const registerUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-  await loginUser(req.body);
+  const session = await loginUser(req.body); // auth function
+
+  // set 2 cookies
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+
+  // send answer to user
+  res.json({
+    status: 200,
+    message: 'Successfully logged in an user!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
 };
