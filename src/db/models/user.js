@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-const userSchema = new Schema(
+const usersSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -9,7 +9,13 @@ const userSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-export const UsersCollection = model('users', userSchema);
+usersSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+
+export const UsersCollection = model('users', usersSchema);
 
 // Створіть модель Session з такими полями:
 

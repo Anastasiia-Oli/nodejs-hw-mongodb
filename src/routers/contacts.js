@@ -15,38 +15,38 @@ import {
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
-const router = Router();
+const contactsRouter = Router();
 
 // all contacts
-router.get('/contacts', ctrlWrapper(getContactsController));
+contactsRouter.get('/', ctrlWrapper(getContactsController));
 
 // contact by id
-router.get(
-  '/contacts/:contactId',
+contactsRouter.get(
+  '/:contactId',
   isValidId,
   ctrlWrapper(getContactByIdController),
 );
 
 // create contact
-router.post(
-  '/contacts',
+contactsRouter.post(
+  '/',
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
 // edit contact
-router.patch(
-  '/contacts/:contactId',
+contactsRouter.patch(
+  '/:contactId',
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
 
 // delete contact
-router.delete(
-  '/contacts/:contactId',
+contactsRouter.delete(
+  '/:contactId',
   isValidId,
   ctrlWrapper(deleteContactController),
 );
 
-export default router;
+export default contactsRouter;
