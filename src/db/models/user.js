@@ -16,11 +16,3 @@ usersSchema.methods.toJSON = function () {
 };
 
 export const UsersCollection = model('users', usersSchema);
-
-// Створіть модель Session з такими полями:
-
-// userId - string, required
-// accessToken - string, required
-// refreshToken - string, required
-// accessTokenValidUntil - Date, required
-// refreshTokenValidUntil - Date, required
