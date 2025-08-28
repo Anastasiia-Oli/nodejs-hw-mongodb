@@ -5,6 +5,7 @@ import {
   createContactSchema,
   updateContactSchema,
 } from '../validation/contacts.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 import {
   getContactsController,
@@ -16,6 +17,9 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const contactsRouter = Router();
+
+// use authentication for this router
+contactsRouter.use(authenticate);
 
 // all contacts
 contactsRouter.get('/', ctrlWrapper(getContactsController));
