@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 
 import { ROLES } from '../constants/index.js';
-import { ContactsCollection } from '../db/models/contacts';
+import { ContactsCollection } from '../db/models/contacts.js';
 
 // accepting roles
 export const checkRoles =
