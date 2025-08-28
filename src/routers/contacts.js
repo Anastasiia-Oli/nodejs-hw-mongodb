@@ -15,6 +15,8 @@ import {
   deleteContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { checkRoles } from '../middlewares/checkRoles.js';
+import { ROLES } from '../constants/index.js';
 
 const contactsRouter = Router();
 
@@ -22,11 +24,16 @@ const contactsRouter = Router();
 contactsRouter.use(authenticate);
 
 // all contacts
-contactsRouter.get('/', ctrlWrapper(getContactsController));
+contactsRouter.get(
+  '/',
+  checkRoles(ROLES.ADMIN, ROLES.USER),
+  ctrlWrapper(getContactsController),
+);
 
 // contact by id
 contactsRouter.get(
   '/:contactId',
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   isValidId,
   ctrlWrapper(getContactByIdController),
 );
@@ -34,6 +41,7 @@ contactsRouter.get(
 // create contact
 contactsRouter.post(
   '/',
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
@@ -41,6 +49,7 @@ contactsRouter.post(
 // edit contact
 contactsRouter.patch(
   '/:contactId',
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
@@ -49,6 +58,7 @@ contactsRouter.patch(
 // delete contact
 contactsRouter.delete(
   '/:contactId',
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   isValidId,
   ctrlWrapper(deleteContactController),
 );
