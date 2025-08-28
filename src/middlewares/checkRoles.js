@@ -16,7 +16,7 @@ export const checkRoles =
 
     // check user role
     const { role } = user;
-    if (roles.includes(ROLES.ADMIN) && role === ROLES.TEACHER) {
+    if (roles.includes(ROLES.ADMIN) && role === ROLES.ADMIN) {
       next();
       return;
     }
