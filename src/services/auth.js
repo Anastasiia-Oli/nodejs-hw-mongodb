@@ -114,7 +114,7 @@ export const requestResetToken = async (email) => {
   }
   const resetToken = jwt.sign(
     {
-      sub: user._id,
+      sub: user._id.toString(),
       email,
     },
     getEnvVar('JWT_SECRET'),
