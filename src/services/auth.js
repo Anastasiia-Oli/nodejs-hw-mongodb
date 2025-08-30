@@ -16,6 +16,7 @@ import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import mongoose from 'mongoose';
 
 // REGISTRATION USER
 export const registerUser = async (payload) => {
@@ -163,9 +164,10 @@ export const resetPassword = async (payload) => {
     throw err;
   }
 
+  // TEST
   const user = await UsersCollection.findOne({
     email: entries.email,
-    _id: entries.sub,
+    _id: new mongoose.Types.ObjectId(entries.sub),
   });
 
   if (!user) {
