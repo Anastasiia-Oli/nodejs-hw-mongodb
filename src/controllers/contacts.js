@@ -8,6 +8,7 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parceSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 // --------- get all
 export const getContactsController = async (req, res) => {
@@ -61,6 +62,7 @@ export const createContactController = async (req, res) => {
   //   }
 
   const { name, phoneNumber, contactType } = req.body;
+  const photo = req.file;
 
   // Validate required fields
   if (!name || !phoneNumber || !contactType) {
@@ -69,8 +71,18 @@ export const createContactController = async (req, res) => {
       message: 'Missing required fields: name, phoneNumber, contactType',
     });
   }
+
+  let photoUrl;
+  if (photo) {
+    photoUrl = await saveFileToCloudinary(photo);
+  }
+
   // Creating contact
-  const contact = await createContact({ ...req.body, userId: req.user._id });
+  const contact = await createContact({
+    ...req.body,
+    userId: req.user._id,
+    ...(photoUrl && { photo: photoUrl }),
+  });
 
   res.status(201).json({
     status: 201,
@@ -82,7 +94,23 @@ export const createContactController = async (req, res) => {
 // ----------- edit (patch)
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await updateContact(contactId, req.body, req.user._id);
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    photoUrl = await saveFileToCloudinary(photo);
+  }
+
+  const updateData = {
+    ...req.body,
+  };
+
+  if (photoUrl) {
+    updateData.photo = photoUrl;
+  }
+
+  const result = await updateContact(contactId, req.user._id, updateData);
 
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
