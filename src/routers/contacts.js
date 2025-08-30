@@ -15,6 +15,7 @@ import {
   deleteContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { upload } from '../middlewares/multer.js';
 // import { checkRoles } from '../middlewares/checkRoles.js';
 // import { ROLES } from '../constants/index.js';
 
@@ -42,6 +43,7 @@ contactsRouter.get(
 contactsRouter.post(
   '/',
   //   checkRoles(ROLES.ADMIN, ROLES.USER),
+  upload.single('photo'),
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
@@ -51,6 +53,7 @@ contactsRouter.patch(
   '/:contactId',
   //   checkRoles(ROLES.ADMIN, ROLES.USER),
   isValidId,
+  upload.single('photo'),
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
