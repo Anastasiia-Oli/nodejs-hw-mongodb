@@ -75,6 +75,7 @@ export const createContactController = async (req, res) => {
   let photoUrl;
   if (photo) {
     photoUrl = await saveFileToCloudinary(photo);
+    console.log('photoUrll after Cloudinary upload:', photoUrl);
   }
 
   // Creating contact
@@ -100,6 +101,7 @@ export const patchContactController = async (req, res, next) => {
 
   if (photo) {
     photoUrl = await saveFileToCloudinary(photo);
+    console.log('photoUrll after Cloudinary upload:', photoUrl);
   }
 
   const updateData = {
@@ -110,7 +112,7 @@ export const patchContactController = async (req, res, next) => {
     updateData.photo = photoUrl;
   }
 
-  const result = await updateContact(contactId, req.user._id, updateData);
+  const result = await updateContact(contactId, updateData, req.user._id);
 
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
