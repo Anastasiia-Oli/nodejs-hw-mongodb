@@ -6,6 +6,7 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import cookieParser from 'cookie-parser';
 
@@ -34,6 +35,10 @@ export const setupServer = () => {
   app.get('/', (req, res) => {
     res.status(200).json({ message: 'Server is running' });
   });
+
+  // documentation
+  // app.use('/uploads', express.static(UPLOAD_DIR));
+  app.use('/api-docs', swaggerDocs());
 
   // routers for geting all contacts and contact by id
   app.use(router);
