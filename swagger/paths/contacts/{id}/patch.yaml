@@ -1,0 +1,76 @@
+tags:
+  - Contacts
+summary: Update contact by id
+operationId: patchContact
+description: 'Update contact by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '68a6542b9a62e57575c48f74'
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          _id:
+            description: "Contact's id"
+            type: string
+            example: 68a6542b9a62e57575c48f74
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'Anna Kovalenko'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: string
+            example: '+380000000006'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'ivan5@example.com'
+          isFavourite:
+            description: 'Is contact favourite'
+            type: boolean
+            example: false
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['work', 'home', 'personal']
+          userId:
+            description: "User's id"
+            type: string
+            example: 68b35f799477ca5c582ecb57
+          photo:
+            description: "Link to contact's photo"
+            type: string
+            example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+responses:
+  '200':
+    description: 'Contact successfully updated'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated contact with id 68a6542b9a62e57575c48f74!
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
