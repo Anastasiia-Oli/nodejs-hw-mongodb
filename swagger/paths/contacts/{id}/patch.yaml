@@ -19,10 +19,6 @@ requestBody:
       schema:
         type: object
         properties:
-          _id:
-            description: "Contact's id"
-            type: string
-            example: 68a6542b9a62e57575c48f74
           name:
             description: "Contact's name"
             type: string
@@ -43,14 +39,10 @@ requestBody:
             description: "Contact's type"
             type: string
             enum: ['work', 'home', 'personal']
-          userId:
-            description: "User's id"
-            type: string
-            example: 68b35f799477ca5c582ecb57
           photo:
-            description: "Link to contact's photo"
+            description: "Contact's photo"
             type: string
-            example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+            format: binary
 responses:
   '200':
     description: 'Contact successfully updated'
